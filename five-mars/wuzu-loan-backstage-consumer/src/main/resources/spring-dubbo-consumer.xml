@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo 
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd 
+		http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd"  default-autowire="byName">
+    
+     <!-- 消费方应用名称信息，这个相当于起一个名字，我们dubbo管理页面比较清晰是哪个应用调用的,保持唯一性 -->  
+     <dubbo:application name="consumer-of-helloworld-app"  />
+       
+     <!-- 使用zookeeper注册中心发现暴露的服务地址 -->    
+     <dubbo:registry address="zookeeper://127.0.0.1:2181" check="false"/>
+       
+     <!-- 生成远程服务代理，可以和本地bean一样使用demoService，该interface需要与服务端暴露的服务interface保持一致，该id已注入Spring -->
+	<dubbo:reference id="indexService" interface="com.jk.service.IndexService"  check="false"/>
+	<dubbo:reference id="WzmTzService" interface="com.jk.service.WzmTzService"    />
+	<dubbo:reference id="WzmDzService" interface="com.jk.service.WzmDzService"    />
+	<dubbo:reference id="WzmJkService" interface="com.jk.service.WzmJkService"    />
+	<dubbo:reference id="treeService" interface="com.jk.service.TreeService"  check="false"/>
+
+	<dubbo:reference id="dhkService" interface="com.jk.service.DhkService"  check="false"  />
+
+	<dubbo:reference id="MemberService" interface="com.jk.service.MemberService"/>
+	<dubbo:reference id="LoginService" interface="com.jk.service.LoginService"/>
+
+	<dubbo:consumer timeout="10000"></dubbo:consumer>
+	 
+</beans>
